@@ -198,6 +198,10 @@ func (c *Coordinator) doPoll(client *http.Client) error {
 	defer resp.Body.Close()
 
 	request, err := http.ReadRequest(bufio.NewReader(resp.Body))
+
+  bodyBytes, err := io.ReadAll(resp.Body)
+  log.Printf("Response Body:\n%s", string(bodyBytes))
+
 	if err != nil {
 		c.logger.Error("Error reading request:", "err", err)
 		return fmt.Errorf("error reading request: %w", err)
